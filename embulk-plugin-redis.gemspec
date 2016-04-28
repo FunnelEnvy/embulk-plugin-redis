@@ -1,14 +1,14 @@
 
 Gem::Specification.new do |gem|
-  gem.name          = "embulk-plugin-redis"
-  gem.version       = "0.1.0"
+  gem.name          = "embulk-plugin-redis-url"
+  gem.version       = "0.2.0"
 
-  gem.summary       = %q{Embulk plugin for Redis}
+  gem.summary       = %q{Embulk plugin for Redis (with URL connection string support)}
   gem.description   = gem.summary
-  gem.authors       = ["Mitsunori Komatsu"]
-  gem.email         = ["komamitsu@gmail.com"]
+  gem.authors       = ["Mitsunori Komatsu", "Tom Maiaroto"]
+  gem.email         = ["komamitsu@gmail.com", "tom@funnelenvy.com"]
   gem.license       = "Apache 2.0"
-  gem.homepage      = "https://github.com/komamitsu/embulk-plugin-redis"
+  gem.homepage      = "https://github.com/FunnelEnvy/embulk-plugin-redis"
 
   gem.files         = `git ls-files`.split("\n") + Dir["classpath/*.jar"]
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})

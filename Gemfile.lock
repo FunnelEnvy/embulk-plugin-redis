@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    embulk-plugin-redis (0.1.0)
+    embulk-plugin-redis-url (0.1.0)
       redis (>= 3.0.5)
 
 GEM
@@ -15,5 +15,8 @@ PLATFORMS
 
 DEPENDENCIES
   bundler (~> 1.0)
-  embulk-plugin-redis!
+  embulk-plugin-redis-url!
   rake (>= 0.9.2)
+
+BUNDLED WITH
+   1.11.2
