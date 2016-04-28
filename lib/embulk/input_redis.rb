@@ -11,6 +11,7 @@ module Embulk
         'port' => config.param('port', :int, :default => 6379),
         'db' => config.param('db', :int, :default => 0),
         'key_prefix' => config.param('key_prefix', :string, :default => ''),
+        'url' => config.param('url', :string),
       }
       threads = config.param('threads', :int, default: 1)
 
@@ -29,7 +30,12 @@ module Embulk
     def run
       puts "Redis input thread #{@index}..."
 
-      r = ::Redis.new(:host => @task['host'], :port => @task['port'], :db => @task['db'])
+      if @task['url'].nil? || @task['url'].empty?
+        r = ::Redis.new(:host => @task['host'], :port => @task['port'], :db => @task['db'])
+      else
+        r = ::Redis.new(:url => @task['url'])
+      end
+      
       r.keys("#{@task['key_prefix']}*").each do |k|
         @page_builder.add([k, r.get(k)])
       end

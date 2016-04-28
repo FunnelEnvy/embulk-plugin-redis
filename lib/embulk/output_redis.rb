@@ -11,6 +11,7 @@ module Embulk
         'port' => config.param('port', :int, :default => 6379),
         'db' => config.param('db', :int, :default => 0),
         'key' => config.param('key', :string),
+        'url' => config.param('url', :string),
       }
 
       puts "Redis output started."
@@ -24,7 +25,11 @@ module Embulk
       puts "Example output thread #{index}..."
       super
       @records = 0
-      @redis = ::Redis.new(:host => task['host'], :port => task['port'], :db => task['db'])
+      if task['url'].nil? || task['url'].empty?
+        @redis = ::Redis.new(:host => task['host'], :port => task['port'], :db => task['db'])
+      else
+        @redis = ::Redis.new(:url => task['url'])
+      end
     end
 
     def close
