@@ -13,6 +13,7 @@ module Embulk
         'key' => config.param('key', :string),
         'url' => config.param('url', :string),
         'is_json' => config.param('is_json', :bool, :default => false),
+        'expire' => config.param('expire', :integer, :default => -1),
       }
 
       puts "Redis output started."
@@ -45,9 +46,16 @@ module Embulk
         # If the data being stored is known to be JSON.
         if task['is_json']
           @redis.set(record[0][task['key']], record[0].to_json)
+          if task['expire'] > -1
+            @redis.expire(record[0][task['key']], task['expire'])
+          end
         else
           @redis.set(hash[task['key']], hash)
+          if task['expire'] > -1
+            @redis.expire(hash[task['key']], task['expire'])
+          end
         end
+
         @records += 1 
       end
     end
