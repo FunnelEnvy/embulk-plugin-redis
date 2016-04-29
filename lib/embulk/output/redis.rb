@@ -12,6 +12,7 @@ module Embulk
         'db' => config.param('db', :integer, :default => 0),
         'key' => config.param('key', :string),
         'url' => config.param('url', :string),
+        'is_json' => config.param('is_json', :boolean, :default => false),
       }
 
       puts "Redis output started."
@@ -39,7 +40,14 @@ module Embulk
       page.each do |record|
         hash = Hash[schema.names.zip(record)]
         puts "#{@message}: #{hash.to_json}"
-        @redis.set(hash[task['key']], hash)
+        # puts "key field: #{task['key']}"
+        # puts "key: #{record[0][task['key']]}"
+        # If the data being stored is known to be JSON.
+        if task['is_json']
+          @redis.set(record[0][task['key']], record[0].to_json)
+        else
+          @redis.set(hash[task['key']], hash)
+        end
         @records += 1 
       end
     end
