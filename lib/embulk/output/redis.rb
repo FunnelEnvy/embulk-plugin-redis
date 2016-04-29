@@ -12,7 +12,7 @@ module Embulk
         'db' => config.param('db', :integer, :default => 0),
         'key' => config.param('key', :string),
         'url' => config.param('url', :string),
-        'is_json' => config.param('is_json', :boolean, :default => false),
+        'is_json' => config.param('is_json', :bool, :default => false),
       }
 
       puts "Redis output started."
